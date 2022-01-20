@@ -1,58 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useState } from "react";
+import Input from "./components/Input";
+import List from "./components/List";
 
 function App() {
+
+  const [items, setItems] = useState([]);
+
+  function addNote(item) {
+    setItems((prevValue) => {
+      return [
+        ...prevValue, item
+      ]
+    })
+  }
+
+  function deleteNote(id) {
+    setItems(() => {
+      return items.filter((newItem, index) => {
+        return index !== id
+      })
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div>
+        <h1>To-Do List</h1>
+      <Input onAdd={addNote}/> <br/>
+      {
+        items.map((newItem, index) => {
+        return(
+          <List 
+            key={index}
+            id={index}
+            content= {newItem.content}
+            onDelete={deleteNote}
+          />
+        )
+      })}
     </div>
-  );
+  )
 }
 
 export default App;
