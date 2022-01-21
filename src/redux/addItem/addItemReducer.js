@@ -1,4 +1,4 @@
-import { ADD_ITEM } from './todoTypes'
+import { ADD_ITEM } from './addItemTypes'
 
 
 const intialState = () => {
@@ -11,6 +11,10 @@ const addReducer = (state = intialState, action) => {
 
         switch(action.type) {
             case ADD_ITEM: return{
+                ...state,
+                content: state.content
+            }
+            case DEL_ITEM: return{
                 ...state,
                 content: state.content
             }
